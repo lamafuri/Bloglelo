@@ -1,0 +1,23 @@
+### - ###
+    a. Learned about ejsinc , and created partials : its analogous term in react is components
+
+    b. Create a userModel :{fullName , email , password ,profileImage (with default : 
+        '/images/defaultProfile.png') , role(with default and enum :[])} : timestamps: true
+
+    c. Create a folder public/images/defaultProfile.png 
+
+    d. Mongoose Pre Save:
+            userSchema.pre('save',function(next){})
+            const user = this;
+            if(!user.isModified('password')) return
+            const salt = randomBytes(16).toString()
+            const hashedPwd = createHmac('sha256',salt).update(user.password).digest("hex");
+            
+            this.salt = salt;
+            this.password = hashedPwd;
+            next();
+    e. Create a user route to signup user
+    f. Create a mongo db connection : mongodb://localhost:27017/blogify
+    g. Create a Schema.static('matchPassword' , function(email , password){})
+    h. Then get the salt for the user and hash the user provided password and match
+    i. If no user or password not match throw error , else return the user , with password and salt undefined
