@@ -14,4 +14,6 @@ f. Using ejs if:else:if(logged in) we can display user their account else : disp
 
 g. Create a logout route res.clearCookie(tokenName).redirect('/')
 
+h. In app.js '/' route , pass { user : req.user }
+
 
