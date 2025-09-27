@@ -19,7 +19,7 @@ function generateToken(user){
 function verifyToken(token){
     try {
         const userPayload = jwt.verify(token , secretKey)
-        console.log(userPayload)
+        console.log(userPayload + " JWT Token got verified")
         return userPayload;
         
     } catch (error ) {

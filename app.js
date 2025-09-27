@@ -8,6 +8,7 @@ const PORT = process.env.PORT;
 const connectToMongoDB = require('./config/mongodb.conn');
 connectToMongoDB();
 const userRouter = require("./routes/user.routes");
+const blogRouter = require('./routes/blog.routes')
 const { checkForAuthenticationCookie } = require('./middlewares/authentication');
 
 app.set('view engine','ejs')
@@ -16,8 +17,10 @@ app.set('views', path.resolve('./views'))
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
+
 app.use(checkForAuthenticationCookie('token'))
-app.use('/user' ,userRouter)
+app.use('/user' ,userRouter) 
+app.use('/blog',blogRouter)
  
 app.get('/',(req , res )=>{
     return res.render('home' , {

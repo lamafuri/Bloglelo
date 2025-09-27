@@ -1,6 +1,6 @@
 ### - ###
 
-a.Create a blogModel : {title , body , coverImageURL:reqd-false , createdBy:type-Schema.Types.ObjectId:ref:userModel ,} timestamps:true
+a.Create a blogModel : {title , body , coverImageURL:reqd-false , createdBy:type-Schema.Types.ObjectId:ref:userModelName ,} timestamps:true
 
 b. Create a input form , routes , controller for blog
 c. New tech learned : multer 

@@ -8,7 +8,7 @@ function checkForAuthenticationCookie(authToken){
             const user = verifyToken(token)
             if(!user) return next();
             req.user = user
-            console.log(user.fullName);
+            console.log(user.fullName + " auth middleware ran");
             return next();
         } catch (error ) {
             console.log("Error checking for authentication cookie in middlewares:");
