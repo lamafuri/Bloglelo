@@ -21,3 +21,6 @@
     g. Create a Schema.static('matchPassword' , function(email , password){})
     h. Then get the salt for the user and hash the user provided password and match
     i. If no user or password not match throw error , else return the user , with password and salt undefined
+
+    note: in mongoose model : schema.pre('save',function(){}) -> this points to current user being saved
+        :                   : schema.static('methodName',function(parameter){}) ->this points to userModel

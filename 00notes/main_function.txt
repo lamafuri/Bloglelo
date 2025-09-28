@@ -1,0 +1,21 @@
+### - ###
+
+a.Create a blogModel : {title , body , coverImageURL:reqd-false , createdBy:type-Schema.Types.ObjectId:ref:userModelName ,} timestamps:true
+
+b. Create a input form , routes , controller for blog
+c. New tech learned : multer 
+    i. In multer diskStorage: destination: path.resolve(public/uploads/${req.user._id}) [so each user has their own   seperate folder]
+    ii. Here , the destination should first exist so not this method
+    iii. generate new fileName with the curret Date.now() so the file name do not coincide
+    iv. create upload = multer({storage})
+    v. Use upload.single(fieldName)
+    vi. coverImageURL : relativeURLPath
+d. Here I use express.static(path.resolve('./public)) in app.js:
+    problem:
+        Express sends a get request at localhost:port/public/filename and this route don't exist :
+        So , to solve these we use express.static()
+    reason: 
+        It eliminates the need to create individual routes for each static file, significantly simplifying the process of making these files accessible via HTTP requests. Without it, you would have to manually define routes for every image, stylesheet, or script file your application uses.
+e. Each blog will be rendered in Card Form in '/blog' route:
+        input array from render('blog',{}) : so we use forEach loop in ejs
+f. Each blog can be viewed in detail in /blog/blog._id

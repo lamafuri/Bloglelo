@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const {createHmac , randomBytes} = require('crypto');
+const { generateToken } = require("../services/authentication");
 
 const userSchema = new mongoose.Schema(
   {
@@ -61,7 +62,8 @@ userSchema.static('matchHash', async function(inEmail , inPassword){
         const providedPasswordHash = createHmac('sha256',salt).update(inPassword).digest('hex');
         if(currentUser.password !== providedPasswordHash) return false;
         console.log("Ran till end")
-        return true;
+        const token = generateToken(currentUser)
+        return token;
     } catch (err ) {
         console.log("Error while hashing the password:\nError:",err.message)
     }

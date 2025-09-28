@@ -1,0 +1,19 @@
+### - ###
+a. Create services/authentication.js ->function(user) return token; add JWT.sign(payload , secretKey)
+    Also create a function getUser(token) to verify token to get payload and return it
+
+b. Then call the function to generate token in userModel static method and return the token from the static method ( modify the static method to return a jwt token)
+
+c. Then in the /user/signin post route , if(authetic) redirect('/') else render('signin',{error:"Invalid pass or user"}) 
+d . If possible use bootstrap to show invalid user or password 
+
+e. Create middlewares/authentication.js where function(tokenName){ return function(req, res,next)
+   { check if token exist , req.user = getUser(token)} }
+
+f. Using ejs if:else:if(logged in) we can display user their account else : display signin and signup button
+
+g. Create a logout route res.clearCookie(tokenName).redirect('/')
+
+h. In app.js '/' route , pass { user : req.user }
+
+
