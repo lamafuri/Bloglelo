@@ -1,4 +1,5 @@
 const blogModel = require('../models/blog');
+const userModel = require('../models/user');
 async function handleCreateNewBlog (req , res) {
     try {
         const {title , body} = req.body;
@@ -35,8 +36,22 @@ async function handleGetAllBlog(req , res) {
         console.log("Error getting all blog:\nError:", err.message);
     }
 }
+async function handleDisplaySingleBlog (req , res) {
+    try {
+        const blogId = req.params.id;
+        const blog = await blogModel.findById(blogId).populate('createdBy');
+        const allBlogs = await blogModel.find({});
+        return res.render('singleBlog',{
+            blog,
+            user:req.user,
+            allBlogs,
+        })
+
+    } catch (err) {
+     console.log("Error getting all blog:\nError:", err.message);
+ }   
+}
 
 module.exports = {
-    handleCreateNewBlog , handleGetAllBlog,
-
+    handleCreateNewBlog , handleGetAllBlog, handleDisplaySingleBlog,
 }

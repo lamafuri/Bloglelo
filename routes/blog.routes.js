@@ -15,14 +15,17 @@ const storage = multer.diskStorage({
 })
 const upload = multer({storage});
 
-const {handleCreateNewBlog, handleGetAllBlog , } = require('../controllers/blog');
+const {handleCreateNewBlog, handleGetAllBlog, handleDisplaySingleBlog , } = require('../controllers/blog');
 
+'/blog'
 router.get('/', handleGetAllBlog)
 router.get('/new-blog' , (req , res)=>{
     res.render('addBlog' , {
         user:req.user
     });
 });
+router.get('/:id',handleDisplaySingleBlog)
+
 router.post('/new-blog',upload.single('coverImage'),handleCreateNewBlog)
 
 module.exports = router;
