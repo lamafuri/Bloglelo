@@ -1,5 +1,7 @@
 const express = require('express')
 const cookieParser = require('cookie-parser')
+const session = require("express-session");
+const flash = require("connect-flash");
 const app = express()
 const path = require('path')
 require('dotenv').config();
@@ -13,7 +15,15 @@ const { checkForAuthenticationCookie } = require('./middlewares/authentication')
 
 app.set('view engine','ejs')
 app.set('views', path.resolve('./views'))
+app.use(
+  session({
+    secret: process.env.SECRET_KEY,  // use a strong secret in production
+    resave: false,             // don't save session if nothing changed
+    saveUninitialized: false,  // only save sessions if something stored
+  })
+);
 
+app.use(flash());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())

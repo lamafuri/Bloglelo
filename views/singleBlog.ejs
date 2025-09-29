@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Bloglelo | <%= blog.title %></title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    <main
+      class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased mt-12 lg:mt-6 relative"
+    >
+      <% if (locals.deleteError) { %>
+      <div
+        id="deleteError"
+        class="absolute w-85 lg:top-20 lg:right-5 lg:w-50 flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+        role="alert"
+      >
+        <svg
+          class="shrink-0 inline w-4 h-4 me-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+          />
+        </svg>
+        <span class="sr-only">Info</span>
+        <div>
+          <span class="font-medium"
+            >Only the creator or admin are authorized</span
+          >
+        </div>
+      </div>
+      <script>
+        setTimeout(() => {
+          const errorDiv = document.getElementById("deleteError");
+          if (errorDiv) {
+            errorDiv.remove();
+          }
+        }, 3000);
+      </script>
+      <% } %>
+      <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+        <article
+          class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert"
+        >
+          <header class="mb-4 lg:mb-6 not-format">
+            <address class="flex items-center mb-6 not-italic">
+              <div
+                class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"
+              >
+                <img
+                  class="mr-4 w-16 h-16 rounded-full"
+                  src="<%= blog.createdBy.profileImage %>"
+                  alt="<%= blog.createdBy.fullName %>"
+                />
+                <div>
+                  <a
+                    href="#"
+                    rel="author"
+                    class="text-xl font-bold text-gray-900 dark:text-white"
+                    ><%= blog.createdBy.fullName %></a
+                  >
+                  <p class="text-base text-gray-500 dark:text-gray-400">
+                    <%= blog.createdBy.role %>
+                  </p>
+                  <p class="text-base text-gray-500 dark:text-gray-400">
+                    <time><%= blog.createdAt.toString().slice(0,-21) %></time>
+                  </p>
+                </div>
+              </div>
+              <!-- Triple dot menu svg -->
+              <div class="flex items-start gap-2.5 ml-auto">
+                <button
+                  id="dropdownMenuIconButton"
+                  data-dropdown-toggle="dropdownDots"
+                  data-dropdown-placement="bottom-start"
+                  class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:ring-gray-600 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 border border-gray-100"
+                  type="button"
+                >
+                  <svg
+                    class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 4 15"
+                  >
+                    <path
+                      d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  id="dropdownDots"
+                  class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-40 dark:bg-gray-700 dark:divide-gray-600"
+                >
+                  <ul
+                    class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="dropdownMenuIconButton"
+                  >
+                    <li>
+                      <a
+                        href="#commentSection"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >Comment</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#otherBlogs"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >Other Blogs</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >Report</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="/blog/delete/<%= blog._id %>"
+                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >Delete</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </address>
+
+            <h1
+              class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white"
+            >
+              <%= blog.title %>
+            </h1>
+          </header>
+          <figure>
+            <img src="<%= blog.coverImageURL %>" alt="cover image" />
+            <figcaption><%= blog.title %></figcaption>
+          </figure>
+          <p><%= blog.body %></p>
+          <!-- comment -->
+          <section class="not-format" id="commentSection">
+            <div class="flex justify-between items-center mb-6">
+              <h2
+                class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white"
+              >
+                Comments (<%= comment.length %>)
+              </h2>
+            </div>
+            <% if (locals.user) { %>
+            <form
+              class="mb-6"
+              action="/blog/comment/<%= blog._id %>"
+              method="post"
+            >
+              <div
+                class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+              >
+                <label for="content" class="sr-only">Your comment</label>
+                <textarea
+                  id="content"
+                  name="content"
+                  rows="6"
+                  class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                  placeholder="Write a comment..."
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+              >
+                Post comment
+              </button>
+            </form>
+            <% } else if (!locals.user) { %>
+            <a href="/user/signin" class="underline hover:no-underline"
+              >Login to drop a comment</a
+            >
+            <% } %>
+
+            <!-- Comment View Board -->
+            <% if (locals.comment && comment.length!==0) { %>
+            <%comment.forEach((element , index) => { %>
+            <article
+              class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900"
+            >
+              <footer class="flex justify-between items-center mb-2">
+                <div class="flex items-center">
+                  <p
+                    class="inline-flex items-center mr-3 font-semibold text-sm text-gray-900 dark:text-white"
+                  >
+                    <img
+                      class="mr-2 w-6 h-6 rounded-full"
+                      src="<%= element.createdBy.profileImage %>"
+                      alt="<%= element.createdBy.fullName %>"
+                    />
+                    <%= element.createdBy.fullName %>
+                  </p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <time><%= element.createdAt.toString().slice(0,-21)%></time>
+                  </p>
+                </div>
+                <button
+                  id="dropdownComment<%= index %>Button"
+                  data-dropdown-toggle="dropdownComment<%= index%>"
+                  class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:text-gray-400 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                  type="button"
+                >
+                  <!-- ... svg-->
+                  <svg
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 16 3"
+                  >
+                    <path
+                      d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+                    />
+                  </svg>
+                </button>
+                <!-- Dropdown menu -->
+                <div
+                  id="dropdownComment<%= index%>"
+                  class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                >
+                  <ul
+                    class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                    aria-labelledby="dropdownMenuIconHorizontalButton"
+                  >
+                    <% if(user && user._id.toString()===
+                    element.createdBy._id.toString()) {%>
+                    <li>
+                      <a
+                        href="/blog/comment/delete/<%= element._id %>"
+                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >Remove</a
+                      >
+                    </li>
+                    <%} %>
+                    <li>
+                      <a
+                        href="#"
+                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >Report</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </footer>
+              <p><%= element.content %></p>
+            </article>
+
+            <% }) %> <% } %>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <!--The bottom other blogs view-->
+    <aside
+      aria-label="Related articles"
+      class="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800"
+      id="otherBlogs"
+    >
+      <div class="px-4 mx-auto max-w-screen-xl">
+        <h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">
+          Related articles
+        </h2>
+        <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+          <% if (locals.allBlogs.length !== 0) { %> <% allBlogs.forEach(item =>
+          { %> <% if (item._id.toString()!=blog._id.toString()) { %>
+          <article class="max-w-xs h-[22rem] relative">
+            <a href="#">
+              <img
+                src="<%= item.coverImageURL %>"
+                class="mb-5 rounded-lg"
+                alt="<%= item.title %>"
+              />
+            </a>
+            <h2
+              class="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white"
+            >
+              <a href="/blog/<%=item._id%>"><%= item.title %></a>
+            </h2>
+            <p class="mb-4 text-gray-500 dark:text-gray-400">
+              <%= item.body.toString().slice(0,75)+"..." %>
+            </p>
+            <a
+              href="/blog/<%= item._id %>"
+              class="absolute bottom-2 flex text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 text-center"
+            >
+              <span>Read more</span>
+              <svg
+                class="rtl:rotate-180 w-3.5 h-3.5 ms-2 inline-block relative top-0.5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 10"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"
+                />
+              </svg>
+            </a>
+          </article>
+          <% } %> <% }) %> <% } %>
+        </div>
+      </div>
+    </aside>
+
+    <hr class="border-gray-200 sm:mx-auto dark:border-gray-700" />
+    <%- include('./partials/footer') %>
+  </body>
+</html>

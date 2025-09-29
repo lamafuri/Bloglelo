@@ -7,17 +7,17 @@
   <body>
     <%- include('./partials/nav') %>
     <main
-      class="bg-gray-50 dark:bg-gray-900 min-h-screen flex flex-wrap flex-col md:flex-row md:flex-row gap-4 justify-start items-start pt-25 pb-4 px-4 md:px-8"
+      class="bg-gray-50 dark:bg-gray-900 min-h-screen flex flex-wrap flex-col md:flex-row md:flex-row gap-4 justify-center items-start pt-25 pb-4 px-4 md:px-8"
     >
     <% if (locals.allBlogs) { %>
         <% allBlogs.forEach(blog => { %>
             <div
               class="md:w-80 md:h-100 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700"
             >
-              <a href="#">
+              <a href="/blog/<%= blog._id %>">
                 <img
                   class="rounded-t-lg md:h-48 md:w-80 overflow-hidden"
-                  src= <%= blog.coverImageURL %>
+                  src= "<%= blog.coverImageURL %>"
                   alt="Cover Image"
                 />
               </a>
@@ -30,10 +30,16 @@
                   </h5>
                 </a>
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                  <%= blog.body.slice(0,80) + "..."%>
+                  <% if (blog.body.length>90) { %>
+                    <%= blog.body.slice(0,80) + "..."%>
+                  <% } else { %>
+                    <%= blog.body %>
+                  <% } %>
+                    
+                   
                 </p>
                 <a
-                  href="#"
+                  href="/blog/<%= blog._id %>"
                   class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Read more
