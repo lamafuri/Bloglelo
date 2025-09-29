@@ -1,4 +1,6 @@
 
 a. Here I learned about Model.populate('createdBy')
     this will populate the current blog object with createdBy(type:Schema.Types.ObjectId , ref:'user') with user object
-b. Comment Schema : content , blogId(Obj Id) , createdBy(Obj Id), 
+b. Comment Schema : content , blogId(Obj Id) , createdBy(Obj Id): req.user._id, 
+
+c. Only authetic user (signed in user) can post a comment .

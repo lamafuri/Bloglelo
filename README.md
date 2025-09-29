@@ -31,7 +31,7 @@
 | 🧠 Backend   | [Express.js](https://expressjs.com) |
 | 💾 Database | [MongoDB](https://mongodb.com)       |
 | 🎨 Styling  | [Tailwind CSS](https://tailwindcss.com), [Bootstrap](https://getbootstrap.com) |
-| 🖥️ SSR      | EJS (or specify if using something else) |
+| 🖥️ SSR      | EJS  |
 | 🌐 Hosting  | Localhost (dev), to be deployed later |
 
 ---

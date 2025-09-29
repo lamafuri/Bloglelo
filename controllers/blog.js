@@ -1,5 +1,6 @@
 const blogModel = require('../models/blog');
 const userModel = require('../models/user');
+const commentModel = require('../models/comment');
 async function handleCreateNewBlog (req , res) {
     try {
         const {title , body} = req.body;
@@ -41,17 +42,34 @@ async function handleDisplaySingleBlog (req , res) {
         const blogId = req.params.id;
         const blog = await blogModel.findById(blogId).populate('createdBy');
         const allBlogs = await blogModel.find({});
+        const comment = await commentModel.find({blogId}).populate('createdBy');
+        // console.log(JSON.stringify(comment));
+        console.log(comment.length +" is the length of comment array")
         return res.render('singleBlog',{
             blog,
             user:req.user,
             allBlogs,
+            comment,
         })
 
     } catch (err) {
      console.log("Error getting all blog:\nError:", err.message);
- }   
+    }   
+}
+async function handleCreateComment (req, res ) {
+    try {
+        const{content} = req.body;
+       const comment = await commentModel.create({
+        content,
+        blogId:req.params.blogId,
+        createdBy: req.user._id,
+       })
+       return res.redirect(`/blog/${req.params.blogId}`);
+    } catch (err) {
+        console.log("Error getting all blog:\nError:", err.message);
+    }
 }
 
 module.exports = {
-    handleCreateNewBlog , handleGetAllBlog, handleDisplaySingleBlog,
+    handleCreateNewBlog , handleGetAllBlog, handleDisplaySingleBlog, handleCreateComment
 }
