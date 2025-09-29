@@ -15,7 +15,8 @@ const storage = multer.diskStorage({
 })
 const upload = multer({storage});
 
-const {handleCreateNewBlog, handleGetAllBlog, handleDisplaySingleBlog ,handleCreateComment, } = require('../controllers/blog');
+const {handleCreateNewBlog, handleGetAllBlog, handleDisplaySingleBlog ,handleCreateComment, handleDeleteComment, handleDeleteBlog,} = require('../controllers/blog');
+const { checkForAuthorizationDeletingBlog } = require('../middlewares/authentication');
 
 '/blog'
 router.get('/', handleGetAllBlog)
@@ -26,8 +27,9 @@ router.get('/new-blog' , (req , res)=>{
 });
 router.get('/:id',handleDisplaySingleBlog)
 router.post('/new-blog',upload.single('coverImage'),handleCreateNewBlog)
+router.get('/delete/:blogId', checkForAuthorizationDeletingBlog , handleDeleteBlog);
 
 router.post('/comment/:blogId' , handleCreateComment);
-
+router.get('/comment/delete/:commentId',handleDeleteComment);
 
 module.exports = router;

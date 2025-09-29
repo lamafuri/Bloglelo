@@ -50,11 +50,23 @@ async function handleDisplaySingleBlog (req , res) {
             user:req.user,
             allBlogs,
             comment,
+            deleteError:req.flash("deleteError")[0],
         })
 
     } catch (err) {
-     console.log("Error getting all blog:\nError:", err.message);
+     console.log("Error displaying  all blog:\nError:", err.message);
     }   
+}
+async function handleDeleteBlog(req, res) {
+    try {
+        const blogId = req.params.blogId;
+        const deletedBlog = await blogModel.findByIdAndDelete(blogId);
+        console.log(`${deletedBlog.title} deleted successfully`);
+        return res.redirect('/blog');
+    } catch (err) {
+        console.log("Error deleting blog:\nError:", err.message);
+        
+    }
 }
 async function handleCreateComment (req, res ) {
     try {
@@ -66,10 +78,20 @@ async function handleCreateComment (req, res ) {
        })
        return res.redirect(`/blog/${req.params.blogId}`);
     } catch (err) {
-        console.log("Error getting all blog:\nError:", err.message);
+        console.log("Error creating comment:\nError:", err.message);
     }
 }
-
+async function handleDeleteComment (req , res ) {
+    try {
+        const commentId = req.params.commentId;
+        const deletedComment = await commentModel.findByIdAndDelete(commentId);
+        console.log(deletedComment.content +" deleted success")
+        return res.redirect(`/blog/${deletedComment.blogId}`);
+    } catch (err) {
+        console.log("Error deleting comment:\nError:", err.message);
+        
+    }
+}
 module.exports = {
-    handleCreateNewBlog , handleGetAllBlog, handleDisplaySingleBlog, handleCreateComment
+    handleCreateNewBlog , handleGetAllBlog, handleDisplaySingleBlog, handleCreateComment , handleDeleteComment , handleDeleteBlog
 }
