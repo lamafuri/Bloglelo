@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-in%20progress-yellow" alt="Status Badge" />
+  <img src="https://img.shields.io/badge/status-%20completed-yellow" alt="Status Badge" />
   <img src="https://img.shields.io/badge/backend-Express.js-informational" />
   <img src="https://img.shields.io/badge/database-MongoDB-brightgreen" />
   <img src="https://img.shields.io/badge/styling-Bootstrap%20%26%20Tailwind-blueviolet" />
