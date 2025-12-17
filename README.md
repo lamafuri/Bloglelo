@@ -19,8 +19,9 @@
 ✅ User Authentication (Sign Up / Sign In)  
 ✅ Server Side Rendering (SSR)  
 ✅ Blog Post Creation (CRUD)  
-✅ Responsive Design using **Tailwind CSS** & **Bootstrap**  
-🚧 Commenting, Likes, Admin Panel (coming soon)
+✅ Responsive Design using **Tailwind CSS** & **Flowbite** 
+✅ Commenting Functionality Added 
+🚧 Likes, Admin Panel (pending)
 
 ---
 
@@ -30,7 +31,7 @@
 |-------------|-----------------------------------|
 | 🧠 Backend   | [Express.js](https://expressjs.com) |
 | 💾 Database | [MongoDB](https://mongodb.com)       |
-| 🎨 Styling  | [Tailwind CSS](https://tailwindcss.com), [Bootstrap](https://getbootstrap.com) |
+| 🎨 Styling  | [Tailwind CSS](https://tailwindcss.com), [FlowBite](https://flowbite.com) |
 | 🖥️ SSR      | EJS  |
 | 🌐 Hosting  | Localhost (dev), to be deployed later |
 
@@ -41,7 +42,7 @@
 ### 🔧 Prerequisites
 
 - [Node.js](https://nodejs.org/)
-- [MongoDB](https://www.mongodb.com/) (Local or Atlas)
+- [MongoDB](https://www.mongodb.com/) (Atlas)
 
 ### 📥 Setup Steps
 
